@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>é... mermão... layout mais bonito que já vi na vida. céloko</title>
+  </head>
+  <body>
+    <h1 class="title">Lista de Produtos</h1>
+    <form>
+      <input type="text" name="product" />
+      <button>Buscar</button>
+    </form>
+    <hr />
+    <table>
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Preco</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      const listContainer = document.querySelector('tbody')
+      const searchForm = document.querySelector('form')
+
+      const products = [
+        { name: 'Produto 1', price: '11.11' },
+        { name: 'Produto 2', price: '22.22' },
+        { name: 'Produto 3', price: '33.33' },
+        { name: 'Produto 4', price: '44.44' },
+        { name: 'Produto 5', price: '55.55' },
+      ]
+
+      const appendAllList = (data) => {
+        listContainer.innerHTML = ''
+
+        if (data.length <= 0) {
+          const tr = document.createElement('tr')
+          const td = document.createElement('td')
+
+          td.setAttribute('colspan', 2)
+          td.innerHTML = 'Nada encontrado'
+          tr.appendChild(td)
+
+          listContainer.appendChild(tr)
+        } else {
+          data.forEach((item) => {
+            const tr = document.createElement('tr')
+            const td1 = document.createElement('td')
+            const td2 = document.createElement('td')
+            td1.classList.add('productName')
+            td2.classList.add('productPrice')
+
+            td1.innerHTML = item.name
+            tr.appendChild(td1)
+
+            td2.innerHTML = item.price
+            tr.appendChild(td2)
+
+            listContainer.appendChild(tr)
+          })
+        }
+      }
+
+      const listSearch = (event) => {
+        event.preventDefault()
+        const term = event?.target?.product?.value
+
+        const listSearchResult = products.filter((item) => {
+          return item.name.includes(term)
+        })
+
+        appendAllList(listSearchResult)
+      }
+
+      // :P hehe
+      const fetchProdutcs = () => {
+        appendAllList(products)
+      }
+
+      window.onload = () => {
+        fetchProdutcs()
+        searchForm.addEventListener('submit', listSearch)
+      }
+    </script>
+  </body>
+</html>
